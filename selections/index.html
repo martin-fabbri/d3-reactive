@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Selections</title>
+    <script type="text/javascript" src="../node_modules/d3/dist/d3.js"></script>
+</head>
+<body>
+    <script src="app.js"></script>
+    <script type="text/javascript">
+        class SimpleWidget {
+            constructor(spec, headline, description) {
+                this.spec = spec;
+                this.headline = headline;
+                this.description = description;
+            }
+
+            render() {
+                let div = d3.select('body').append('div');
+                div.append('h3').text(this.headline);
+            }
+        }
+
+        let widget = new SimpleWidget({color: '#6495ed'},
+            'Simple Widget',
+            'This is a simple widget'
+        );
+
+        widget.render();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="../node_modules/d3/dist/d3.js"></script>
+</head>
+<body>
+
+<p id="targetHtml"></p>
+<p id="target"></p>
+
+<div><!--intentionally left blank--></div>
+<div><!--intentionally left blank--></div>
+<div><!--intentionally left blank--></div>
+<div><!--intentionally left blank--></div>
+
+<script type='text/javascript'>
+    d3.select('p#targetHtml')
+        .html('<h1>This is a header</h1>');
+
+    d3.select('p#target')
+        .text('Hello world!');
+
+    d3.select('div')
+        .html('<span style="color: blue">D3.js</span>');
+</script>
+
+</body>
+</html>

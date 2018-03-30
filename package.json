@@ -1,0 +1,22 @@
+{
+  "name": "d3-reactive",
+  "version": "1.0.0",
+  "description": "Reactive D3 Visualizations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martin-fabbri/d3-reactive.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martin-fabbri/d3-reactive/issues"
+  },
+  "homepage": "https://github.com/martin-fabbri/d3-reactive#readme",
+  "dependencies": {
+    "d3": "^5.0.0"
+  }
+}
