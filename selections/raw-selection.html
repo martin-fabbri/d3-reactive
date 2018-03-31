@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Raw Selection</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <script type="text/javascript" src="../node_modules/d3/dist/d3.js"></script>
+</head>
+
+<body>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>10:22</td>
+        <td>Purchase</td>
+        <td>$10.00</td>
+    </tr>
+    <tr>
+        <td>12:12</td>
+        <td>Purchase</td>
+        <td>$12.50</td>
+    </tr>
+    <tr>
+        <td>14:11</td>
+        <td>Expense</td>
+        <td>$9.70</td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    let trSelection = d3.selectAll('tr');
+    let headerElement = trSelection.nodes()[0];
+    console.log("Header element is an instance of DOM element:" +
+        (headerElement instanceof Element));
+
+    d3.select(headerElement).attr('class', 'table-header');
+
+    let rows = trSelection.nodes();
+    d3.select(rows[1]).attr('class', 'table-row-odd');
+    d3.select(rows[2]).attr('class', 'table-row-even');
+    d3.select(rows[3]).attr('class', 'table-row-odd');
+
+</script>
+
+</body>
+</html>
