@@ -18,8 +18,10 @@
 
 <script type='text/javascript'>
     d3.selectAll('div')
-        .html('<h1>This is a header</h1>')
-        .attr('class', 'red box');
+        .attr('class', 'red box')
+        .each(function (d, i) {
+            d3.select(this).append('h1').text(i);
+        });
 </script>
 
 </body>
