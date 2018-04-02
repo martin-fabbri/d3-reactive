@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+</head>
+<body>
+    <h1>Scales</h1>
+
+    <script>
+        const height = 600;
+        const data = [
+            {date: new Date('01-01-2015'), temp: 0},
+            {date: new Date('01-01-2017'), temp: 3}
+        ];
+
+        // const min = d3.min(data, d => d.date);
+        // const max = d3.max(data, d => d.date);
+
+        const [min, max] = d3.extent(data, d => d.date);
+
+        const yScale = d3.scaleLinear()
+            .domain([min, max])
+            .range([height, 0]);
+
+        console.log(yScale);
+
+
+    </script>
+</body>
+</html>

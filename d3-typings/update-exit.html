@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+</head>
+<body>
+    <h1>Enter Append</h1>
+
+    <svg height="1000" width="3000"></svg>
+
+    <script>
+        const rectWidth = 100;
+        const height = 300;
+        let data = [100, 250, 175, 200, 120];
+
+        var svg = d3.select('svg');
+        svg.selectAll('rect')
+            .data(data)
+            .enter().append('rect')
+            .attr('x', (d, i) => i * rectWidth)
+            .attr('y', d => height -d)
+            .attr('width', rectWidth)
+            .attr('height', d => d)
+            .attr('fill', 'blue')
+            .attr('stroke', '#fff');
+
+        setTimeout(() => {
+            console.log('Exit!!!');
+            data = [120, 200, 175, 250, 100, 140];
+            let bars = svg.selectAll('rect')
+                .data(data, d => d);
+
+            bars.exit().remove();
+
+            const enter = bars.enter().append('rect')
+                .attr('width', rectWidth)
+                .attr('fill', 'red')
+                .attr('stroke', '#fff');
+
+            bars = enter.merge(bars)
+                .attr('x', (d, i) => i * rectWidth)
+                .attr('y', d => height - d)
+                .attr('height', d=> d);
+
+        }, 1000);
+
+
+
+    </script>
+</body>
+</html>

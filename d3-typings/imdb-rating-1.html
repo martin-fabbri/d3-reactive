@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IMDB rating</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+    <style>
+        svg {
+           width: 900px;
+           height: 900px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IMDB Rating 1</h1>
+
+    <svg></svg>
+
+    <script>
+        const padding = 20;
+        const svg = d3.select('svg')
+            .append('g')
+            .attr('transform', `translate(${padding}, ${padding})`);
+
+        // draw petal
+        const petals = [[
+            'M0,0',
+            'C50,50 50,100 0,100',
+            'C-50,100 -50,50 0,0'
+        ], [
+            'M-35,0',
+            'C-25,25 25,25 35,0',
+            'C50,25 25,75 0,100',
+            'C-25,75 -50,25 -35,0'
+        ], [
+            'M0,0',
+            'C50,40 50,70 20,100',
+            'L0,85',
+            'L-20,100',
+            'C-50,70 -50,40 0,0'
+        ], [
+            'M0,0',
+            'C50,25 50,75 0,100',
+            'C-50,75 -50,25 0,0'
+        ]];
+
+        svg.selectAll('path')
+            .data(petals).enter().append('path')
+            .attr('stroke', '#000')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none')
+            .attr('d', (d) => d)
+            .attr('transform', (d, i) => {
+                // const x = (i % 3) * 150;
+                // const y = Math.floor(i / 3) * 150;
+                i += 1;
+                return `translate(${150 * i}, 0)`;
+            });
+
+
+
+    </script>
+</body>
+</html>

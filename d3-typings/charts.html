@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+</head>
+<body>
+    <h1>Charts</h1>
+
+    <svg>
+        <rect />
+        <rect />
+        <rect />
+        <rect />
+        <rect />
+        <rect />
+        <rect />
+    </svg>
+
+    <script>
+        const height = 600;
+        const rectWidth = 100;
+        const data = [
+            100, 250, 175, 200, 12
+        ];
+
+        d3.selectAll('rect')
+            .data(data)
+            .attr('x', (d, i) => i * rectWidth)
+            .attr('y', d => height - d)
+            .attr('width', rectWidth)
+            .attr('height', d => d)
+            .attr('fill', 'blue')
+            .attr('stroke', '#fff');
+
+
+    </script>
+</body>
+</html>

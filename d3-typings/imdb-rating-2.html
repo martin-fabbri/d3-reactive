@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IMDB rating</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js'></script>
+    <style>
+        svg {
+           width: 900px;
+           height: 900px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IMDB Rating 2</h1>
+
+    <svg></svg>
+
+    <script>
+        const padding = 20;
+        const svg = d3.select('svg')
+            .append('g')
+            .attr('transform', `translate(${padding}, ${padding})`);
+
+        const flowerSize = 300;
+        const numPetals = 6;
+
+        const petalPaths = [[
+            'M0,0',
+            'C50,50 50,100 0,100',
+            'C-50,100 -50,50 0,0'
+        ], [
+            'M-35,0',
+            'C-25,25 25,25 35,0',
+            'C50,25 25,75 0,100',
+            'C-25,75 -50,25 -35,0'
+        ], [
+            'M0,0',
+            'C50,40 50,70 20,100',
+            'L0,85',
+            'L-20,100',
+            'C-50,70 -50,40 0,0'
+        ], [
+            'M0,0',
+            'C50,25 50,75 0,100',
+            'C-50,75 -50,25 0,0'
+        ]];
+
+        const flowers = svg.selectAll('g.flower')
+            .data(petalPaths).enter().append('g')
+            .classed('flower', true)
+            .attr('transform', (d, i) => {
+                const x = (i % 2) * flowerSize;
+                const y = Math.floor(i/2) * flowerSize;
+                return `translate(${x}, ${y})`;
+            });
+
+        flowers.selectAll('path')
+            .data((d) => {
+                    return _.times(numPetals, (i) => {
+                        return {
+                            angle: (360 / numPetals) * i,
+                            d: d
+                        }
+                    })
+                }
+            ).enter().append('path')
+            .attr('stroke', '#000')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none')
+            .attr('d', (d) => d.d)
+            .attr('transform', (d) => {
+                const cx = flowerSize / 2;
+                const cy = flowerSize / 2;
+                return `translate(${cx}, ${cy})rotate(${d.angle})`;
+            });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IMDB rating</title>
+    <script src="../node_modules/d3/dist/d3.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js'></script>
+    <style>
+        svg {
+           width: 1200px;
+           height: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IMDB Rating 3</h1>
+
+    <svg></svg>
+
+    <script>
+        const padding = 20;
+        const svg = d3.select('svg')
+            .append('g')
+            .attr('transform', `translate(${padding}, ${padding})`);
+
+        const flowerSize = 150;
+
+        const petalPaths = [[
+            'M0,0',
+            'C50,50 50,100 0,100',
+            'C-50,100 -50,50 0,0'
+        ], [
+            'M-35,0',
+            'C-25,25 25,25 35,0',
+            'C50,25 25,75 0,100',
+            'C-25,75 -50,25 -35,0'
+        ], [
+            'M0,0',
+            'C50,40 50,70 20,100',
+            'L0,85',
+            'L-20,100',
+            'C-50,70 -50,40 0,0'
+        ], [
+            'M0,0',
+            'C50,25 50,75 0,100',
+            'C-50,75 -50,25 0,0'
+        ]];
+
+        const numPetalScale = d3.scaleQuantize()
+            .range(_.range(5, 15));
+        const flowerSizeScale = d3.scaleLinear()
+            .range([.05, 5]);
+        const petalScale = d3.scaleOrdinal()
+            .range(_.range(4));
+
+        console.log('ok00000');
+
+        d3.json('movies.json', function(error, movies) {
+            console.log('movies', movies);
+
+            // movies = movies.map((movie) => {
+            //     return movie;
+            // })
+            //
+            // console.log('movies', movies);
+        });
+
+
+    </script>
+</body>
+</html>
