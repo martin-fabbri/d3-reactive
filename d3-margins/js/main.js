@@ -26,11 +26,22 @@ d3.json('data/buildings.json').then((data) => {
         .paddingInner(0.2)
         .paddingOuter(0.2);
 
-
     const y = d3.scaleLinear()
         .domain([0, d3.max(data, (d) => d.height)])
         .range([0, height]);
 
+    const xAxisCall = d3.axisBottom(x);
+    g.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', `translate(0, ${height})`)
+        .call(xAxisCall);
+
+    const yAxisCalls = d3.axisLeft(y);
+    g.append('g')
+        .attr('class', 'y-axis')
+        .call(yAxisCalls);
+
+    const yAxisCall = d3.axisLeft(y);
 
     const rects = g.selectAll('rect')
         .data(data);

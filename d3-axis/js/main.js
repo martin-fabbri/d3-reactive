@@ -12,6 +12,8 @@ const svg = d3.select('#chart-area')
 const g = svg.append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
+const gRoot = g;
+
 g.append('text')
     .attr('class', 'x axis-label')
     .attr('x', width / 2)
