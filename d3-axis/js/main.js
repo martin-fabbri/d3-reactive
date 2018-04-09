@@ -20,6 +20,14 @@ g.append('text')
     .attr('text-anchor', 'middle')
     .text(`The world's tallest buildings.`);
 
+g.append('text')
+    .attr('class', 'y axis-label')
+    .attr('x', -(height / 2))
+    .attr('y', -60)
+    .attr('font-size', '20px')
+    .attr('text-anchor', 'middle')
+    .attr('transform', 'rotate(-90)')
+    .text('Height (m)');
 
 d3.json('data/buildings.json').then((data) => {
     data.forEach((d) => {
@@ -33,8 +41,8 @@ d3.json('data/buildings.json').then((data) => {
         .paddingOuter(0.3);
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(data, (data) => data.height)])
-        .range([0, height]);
+        .domain([0, d3.max(data, data => data.height)])
+        .range([height, 0]);
 
     const xAxisCall = d3.axisBottom(x);
     g.append('g')
@@ -61,9 +69,10 @@ d3.json('data/buildings.json').then((data) => {
     rects.enter()
         .append('rect')
             .attr('x', (d) => x(d.name))
-            .attr('y', 0)
+            .attr('y', d => y(d.height))
             .attr('width', x.bandwidth())
-            .attr('height', (d) => y(d.height));
+            .attr('height', d => height - y(d.height))
+            .attr('fill', 'grey');
 
 }).catch(() => {
     console.log('errorxxx');
