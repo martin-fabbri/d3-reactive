@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/martin-fabbri/d3-reactive#readme",
   "dependencies": {
-    "d3": "^5.0.0"
+    "d3": "^5.4.0",
+    "npm": "^6.0.1"
   },
   "devDependencies": {
+    "@types/d3": "^5.0.0",
     "http-server": "^0.11.1"
   }
 }
