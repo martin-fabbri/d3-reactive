@@ -9,7 +9,8 @@ This is a collection of composable React components for building interactive dat
 
 ## Design Principles
 
-- React is in charge of element creation, D3 is used as the visualization kernel.
+- Should be library agnostic. The component interface should be able to accomodate any api drawing graphics technology. 
+- D3 is used as the visualization kernel for data preparation. React renders the DOM & manages all the state changes.
 - Support high level core components that can composed to create complex charts.
 - Core components abstract layout, sizing, and positioning.
 
@@ -33,6 +34,8 @@ This is a collection of composable React components for building interactive dat
 - [plottable](http://plottablejs.org)
 - [victory](https://github.com/FormidableLabs/victory) 
 - [semiotic](https://emeeks.github.io/semiotic/#/semiotic/)
+- [codesuki/react-d3-components](https://github.com/codesuki/react-d3-components)
+- [react-d3](https://github.com/react-d3)
 
 
 
