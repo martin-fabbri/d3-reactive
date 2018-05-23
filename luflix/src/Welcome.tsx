@@ -7,8 +7,10 @@ export interface IProps {
 class Welcome extends React.Component<IProps> {
 
     public render() {
+        const {greeting} = this.props;
+
         return (
-            <div>{this.props.greeting}</div>
+            <h1>{greeting}</h1>
         );
     }
 }
