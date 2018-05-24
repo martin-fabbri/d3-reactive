@@ -6,10 +6,12 @@ import BasicsPanel from "./panels/01-basics/basics";
 import SvgPanel from "./panels/02-svg/svg";
 import ScalingPanel from "./panels/03-scaling/scaling";
 import MaxPanel from "./panels/04-max/max";
+import RangeBandsPanel from "./panels/05-range-bands/range-bands";
+import ColorScalesPanel from "./panels/06-color-scales/color-scales";
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
-import {RangeBandsPanel} from "./panels/05-range-bands/range-bands";
+
 
 export interface IState {
     activePanelOnly: boolean;
@@ -40,6 +42,7 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="cs" title="06-Colors Scale" panel={<ColorScalesPanel/>} />
                     <Tab id="rb" title="05-Range Bands" panel={<RangeBandsPanel/>} />
                     <Tab id="mx" title="04-Max" panel={<MaxPanel/>} />
                     <Tab id="sc" title="03-Scaling" panel={<ScalingPanel/>} />
