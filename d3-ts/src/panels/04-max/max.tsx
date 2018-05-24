@@ -7,13 +7,14 @@ const height = 300;
 const width = 400;
 const barWidth = 20;
 const barPadding = 5;
+const chartPaddingTop = 1.1;
 const barFillColor = 'teal';
 
 const defaultMax = 100;
 const maxValueDomain = max(dataset);
 
 const yScale = scaleLinear()
-    .domain([0, maxValueDomain ? maxValueDomain : defaultMax])
+    .domain([0, maxValueDomain ? maxValueDomain * chartPaddingTop : defaultMax])
     .range([0, height]);
 
 class MaxPanel extends React.Component {

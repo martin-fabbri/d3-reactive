@@ -9,6 +9,7 @@ import MaxPanel from "./panels/04-max/max";
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
+import {RangeBandsPanel} from "./panels/05-range-bands/range-bands";
 
 export interface IState {
     activePanelOnly: boolean;
@@ -39,10 +40,11 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="rb" title="05-Range Bands" panel={<RangeBandsPanel/>} />
                     <Tab id="mx" title="04-Max" panel={<MaxPanel/>} />
-                    <Tab id="mb" title="03-Scaling" panel={<ScalingPanel/>} />
-                    <Tab id="ng" title="02-Svg" panel={<SvgPanel />}/>
-                    <Tab id="rx" title="01-Basics" panel={<BasicsPanel/>} />
+                    <Tab id="sc" title="03-Scaling" panel={<ScalingPanel/>} />
+                    <Tab id="sv" title="02-Svg" panel={<SvgPanel />}/>
+                    <Tab id="bs" title="01-Basics" panel={<BasicsPanel/>} />
                     <Tabs.Expander />
                 </Tabs>
             </section>
