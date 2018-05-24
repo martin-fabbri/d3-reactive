@@ -17,6 +17,12 @@ export interface IProps {
     width?: number;
 }
 
+// export interface BarChartDatum {
+//     color: string;
+//     value: number;
+//     id: string;
+// }
+
 interface IDefaultProps {
     height: number;
     padding: number;
