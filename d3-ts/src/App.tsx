@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Tab, TabId, Tabs } from "@blueprintjs/core";
 
 import BasicsPanel from "./panels/01-basics/basics"
+import SvgPanel from "./panels/02-svg/svg"
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
@@ -36,8 +37,8 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="ng" title="Svg" panel={<SvgPanel />}/>
                     <Tab id="rx" title="Basics" panel={<BasicsPanel/>} />
-                    <Tab id="ng" title="Angular" panel={<AngularPanel />} />
                     <Tab id="mb" title="Ember" panel={<EmberPanel />} />
                     <Tabs.Expander />
                 </Tabs>
@@ -47,11 +48,6 @@ class App extends React.Component<IProps, IState> {
 }
 
 
-const AngularPanel: React.SFC<{}> = () => (
-    <div>
-        <h3>Example 2 ...</h3>
-    </div>
-);
 
 const EmberPanel: React.SFC<{}> = () => (
     <div>
