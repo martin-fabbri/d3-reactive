@@ -8,6 +8,9 @@ import ScalingPanel from "./panels/03-scaling/scaling";
 import MaxPanel from "./panels/04-max/max";
 import RangeBandsPanel from "./panels/05-range-bands/range-bands";
 import ColorScalesPanel from "./panels/06-color-scales/color-scales";
+import QuantitiveScalesPanel from "./panels/07-quantitive-scales/quantitive-scales";
+import MarginsPanel from "./panels/08-margins/margins";
+import ScatterPanel from "./panels/09-scatter-plot/scatter";
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
@@ -42,6 +45,9 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="sp" title="09-Scatter" panel={<ScatterPanel/>} />
+                    <Tab id="mg" title="08-Margins" panel={<MarginsPanel/>} />
+                    <Tab id="qs" title="07-Quantitive Scale" panel={<QuantitiveScalesPanel/>} />
                     <Tab id="cs" title="06-Colors Scale" panel={<ColorScalesPanel/>} />
                     <Tab id="rb" title="05-Range Bands" panel={<RangeBandsPanel/>} />
                     <Tab id="mx" title="04-Max" panel={<MaxPanel/>} />
