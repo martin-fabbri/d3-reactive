@@ -4,6 +4,8 @@ import styled, {theme} from '../theme';
 
 import {Orientation} from '../utils/axis';
 
+import scaleLinear from '../scales/linear'
+
 interface IProps {
     className?: string
     height: number
@@ -26,57 +28,43 @@ class AxisTicks extends React.Component<IProps> {
 
     public static defaultProps: IDefaultProps = {
         style: {},
-        tickSize: 2
+        tickSize: 8
     };
 
     public render() {
+        const {width, height, orientation, className} = this.props as PropsWithDefaults
 
-        const {height, style, orientation, width, className} = this.props as PropsWithDefaults;
+        const x = orientation === Left ? width : 0
+        const y = orientation === Top ? height : 0
 
-        // default orientation bottom
-        let lineProps = {
-            x1: 0,
-            x2: width,
-            y1: 0,
-            y2: 0,
-        };
+        const values: number[] = [0, 5, 10, 15, 20];
 
-        switch(orientation) {
-            case AxisLineOrientation.Left: {
-                lineProps = {
-                    x1: width,
-                    x2: width,
-                    y1: 0,
-                    y2: height
-                };
-                break;
-            }
-            case AxisLineOrientation.Right: {
-                lineProps = {
-                    x1: 0,
-                    x2: 0,
-                    y1: 0,
-                    y2: height
-                };
-                break;
-            }
-            case AxisLineOrientation.Top: {
-                lineProps = {
-                    x1: 0,
-                    x2: width,
-                    y1: height,
-                    y2: height
-                };
-                break;
-            }
-        }
+        const pathProps = this.getTickLineProps();
+        const translateFn = this.getTickContainerProps();
+        const linear = scaleLinear()
+            .range([0, width])
+            .domain([0, 20]);
+
+        const ticks = values.map((v: number, i: number) => {
+            const pos = linear.scale(v);
+
+            return (
+                <g key={i} {...translateFn(pos)}>
+                    <line {...pathProps}
+                          className={className}
+                    />
+                </g>
+            );
+        });
 
         return (
-            <line {...lineProps} style={style} className={className}/>
+            <g
+                transform={`translate(${x}, ${y})`}
+                className={className}>
+                {ticks}
+            </g>
         )
     }
-
-
 
     private isAxisVertical() {
         const {orientation} = this.props as PropsWithDefaults
@@ -94,29 +82,24 @@ class AxisTicks extends React.Component<IProps> {
             (pos: number) => ({transform: `translate(${pos}, 0)`})
     }
 
-    // private getTickLineProps() {
-    //     const {
-    //         tickSize,
-    //         tickSizeOuter = tickSize,
-    //         tickSizeInner = tickSize} = this.props;
-    //     const isVertical = this._isAxisVertical();
-    //     const tickXAttr = isVertical ? 'y' : 'x';
-    //     const tickYAttr = isVertical ? 'x' : 'y';
-    //     const wrap = this._areTicksWrapped() ? -1 : 1;
-    //     return {
-    //         [`${tickXAttr}1`]: 0,
-    //         [`${tickXAttr}2`]: 0,
-    //         [`${tickYAttr}1`]: -wrap * tickSizeInner,
-    //         [`${tickYAttr}2`]: wrap * tickSizeOuter
-    //     };
-    // }
+    private getTickLineProps() {
+        const {tickSize} = this.props as PropsWithDefaults;
+        const isVertical = this.isAxisVertical();
+        const tickXAttr = isVertical ? 'y' : 'x';
+        const tickYAttr = isVertical ? 'x' : 'y';
+        const wrap = this.areTicksWrapped() ? -1 : 1;
+        return {
+            [`${tickXAttr}1`]: 0,
+            [`${tickXAttr}2`]: 0,
+            [`${tickYAttr}1`]: -wrap * tickSize,
+            [`${tickYAttr}2`]: wrap * tickSize
+        };
+    }
 
 };
 
-const StyledAxisLine = styled(AxisLine)`
-    fill: none;
-    stroke-width: 2px;
+const StyledAxisTicks = styled(AxisTicks)`
     stroke: ${theme.xyPlotAxisLineColor};
 `;
 
-export default StyledAxisLine;
+export default StyledAxisTicks;

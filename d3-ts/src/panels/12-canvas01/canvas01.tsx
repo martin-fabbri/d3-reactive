@@ -2,7 +2,11 @@ import * as React from 'react';
 
 import CanvasFrame from './canvas-frame';
 
-import AxisLine, {AxisLineOrientation} from './axis/axis-line'
+import AxisLine from './axis/axis-line';
+
+import AxisTicks from './axis/axis-ticks';
+
+import {Orientation} from './utils/axis';
 
 // import scaleLinear from './scales/linear'
 // import {range} from 'd3';
@@ -22,7 +26,7 @@ interface IProps {
 const margin = { bottom: 30, left: 20, top: 0, right: 0};
 const height = 300 - margin.top - margin.bottom;
 const width = 400 - margin.left - margin.right;
-
+const {Bottom} = Orientation;
 
 // const x = scaleLinear().range([0, width]);
 // const y = scaleLinear().range([height, 0]);
@@ -53,7 +57,13 @@ class Canvas01Panel extends React.Component<IProps> {
                             <AxisLine
                                 height={height - 20}
                                 width={width}
-                                orientation={AxisLineOrientation.Bottom}
+                                orientation={Bottom}
+                            />
+
+                            <AxisTicks
+                                height={height - 20}
+                                width={width}
+                                orientation={Bottom}
                             />
 
                             <CanvasFrame
