@@ -14,7 +14,10 @@ const {
 
 export const theme = {
     primaryColor: '#e9e9eb',
-    xyPlotAxisLineColor: '#e6e6e9'
+    // axis
+    xyPlotAxisFontColor: '#6b6b76',
+    xyPlotAxisFontSize: '11px',
+    xyPlotAxisLineColor: '#e6e6e9',
 };
 
 export default styled;

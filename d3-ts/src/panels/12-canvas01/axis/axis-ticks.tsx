@@ -7,17 +7,19 @@ import {Orientation} from '../utils/axis';
 import scaleLinear from '../scales/linear'
 
 interface IProps {
-    className?: string
-    height: number
-    style?: React.CSSProperties
-    tickSize?: number
-    orientation: Orientation
-    width: number
+    className?: string;
+    height: number;
+    scale?: string;
+    style?: React.CSSProperties;
+    tickSize?: number;
+    orientation: Orientation;
+    width: number;
 }
 
 interface IDefaultProps {
-    style: React.CSSProperties
-    tickSize: number
+    scale: string;
+    style: React.CSSProperties;
+    tickSize: number;
 }
 
 type PropsWithDefaults = IProps & IDefaultProps
@@ -27,8 +29,9 @@ const {Left, Right, Top} = Orientation
 class AxisTicks extends React.Component<IProps> {
 
     public static defaultProps: IDefaultProps = {
+        scale: 'linear',
         style: {},
-        tickSize: 8
+        tickSize: 8,
     };
 
     public render() {
