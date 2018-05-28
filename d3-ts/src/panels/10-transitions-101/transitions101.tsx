@@ -46,7 +46,7 @@ const yScale = scaleLinear()
     .domain([min(y)!, max(y)!])
     .range([0, height]);
 
-class ScatterPanel extends React.Component {
+class Transitions101Panel extends React.Component {
     public render() {
         const scatterPlot = dataset.map((d, i) =>
             <Dot
@@ -79,4 +79,4 @@ class ScatterPanel extends React.Component {
     }
 };
 
-export default ScatterPanel;
+export default Transitions101Panel;

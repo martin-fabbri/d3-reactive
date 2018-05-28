@@ -11,6 +11,9 @@ import ColorScalesPanel from "./panels/06-color-scales/color-scales";
 import QuantitiveScalesPanel from "./panels/07-quantitive-scales/quantitive-scales";
 import MarginsPanel from "./panels/08-margins/margins";
 import ScatterPanel from "./panels/09-scatter-plot/scatter";
+import Transitions101Panel from "./panels/10-transitions-101/transitions101";
+import InterpolationPanel from "./panels/11-interpolation/canvas01";
+import Canvas01Panel from "./panels/12-canvas01/canvas01";
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
@@ -45,6 +48,9 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="c1" title="12-Canvas01" panel={<Canvas01Panel/>} />
+                    <Tab id="it" title="11-Interpolation" panel={<InterpolationPanel/>} />
+                    <Tab id="tr" title="10-Transitions101" panel={<Transitions101Panel/>} />
                     <Tab id="sp" title="09-Scatter" panel={<ScatterPanel/>} />
                     <Tab id="mg" title="08-Margins" panel={<MarginsPanel/>} />
                     <Tab id="qs" title="07-Quantitive Scale" panel={<QuantitiveScalesPanel/>} />

@@ -36,9 +36,11 @@ This is a collection of composable React components for building interactive dat
 - [semiotic](https://emeeks.github.io/semiotic/#/semiotic/)
 - [codesuki/react-d3-components](https://github.com/codesuki/react-d3-components)
 - [react-d3](https://github.com/react-d3)
-
-
-
+- [Lucify Blog](https://blog.lucify.com/building-interactive-visualizations-with-react-d3-and-typescript-206c7172b0d2)
+- [yang-wei/rd3](https://github.com/yang-wei/rd3)
+- [react-vis](https://uber.github.io/react-vis/examples/showcases/plots)
+- [recharts](http://recharts.org/en-US/api)
+- [vx-demo](https://vx-demo.now.sh/gallery)
 
 
 
