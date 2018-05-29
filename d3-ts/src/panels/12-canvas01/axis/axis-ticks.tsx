@@ -4,7 +4,7 @@ import styled, {theme} from '../theme';
 
 import {Orientation} from '../utils/axis';
 
-import scaleLinear from '../scales/linear'
+import {scaleLinear} from 'd3-scale'
 
 interface IProps {
     className?: string;
@@ -49,7 +49,7 @@ class AxisTicks extends React.Component<IProps> {
             .domain([0, 20]);
 
         const ticks = values.map((v: number, i: number) => {
-            const pos = linear.scale(v);
+            const pos = linear(v);
 
             return (
                 <g key={i} {...translateFn(pos)}>

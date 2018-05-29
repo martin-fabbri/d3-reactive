@@ -1,10 +1,13 @@
 import * as React from 'react';
 
-import CanvasFrame from './canvas-frame';
+import LineSeries from './series/line-series';
+import {Datum} from "./utils/scales";
 
-import XAxis from './axis/x-axis';
+// import CanvasFrame from './canvas-frame';
 
-import {Orientation} from './utils/axis';
+// import XAxis from './axis/x-axis';
+
+// import {Orientation} from './utils/axis';
 
 // import scaleLinear from './scales/linear'
 // import {range} from 'd3';
@@ -34,11 +37,12 @@ const width = 400 - margin.left - margin.right;
 //     );
 // }
 
-const {Bottom} = Orientation;
+// const {Bottom} = Orientation;
 
 class Canvas01Panel extends React.Component<IProps> {
 
     public render() {
+        const data: Datum = [{x: 1, y:1}, {x: 2, y:2}];
         return (
             <div className="mt-4 mb-4">
                 <h3>Canvas01</h3>
@@ -53,14 +57,11 @@ class Canvas01Panel extends React.Component<IProps> {
 
                         <g transform={`translate(${margin.left}, ${margin.top})`}>
 
-                            <XAxis
-                                attr="x"
-                                attrAxis="y"
-                                orientation=Bottom/>
+                            <LineSeries width={100} height={100} data={data}/>
 
-                            <CanvasFrame
-                                width={width}
-                                height={height}/>
+                            {/*<CanvasFrame*/}
+                                {/*width={width}*/}
+                                {/*height={height}/>*/}
                         </g>
                     </svg>
                 </section>

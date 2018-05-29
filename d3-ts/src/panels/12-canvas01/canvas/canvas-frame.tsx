@@ -41,7 +41,7 @@ class CanvasFrame extends React.Component<IProps> {
     }
 
     public componentDidUpdate() {
-
+        return;
     }
 
     public render() {
@@ -83,31 +83,32 @@ class CanvasFrame extends React.Component<IProps> {
      */
     private drawChildren(newProps: PropsWithDefaults, oldProps: PropsWithDefaults | null,
                          ctx: CanvasRenderingContext2D) {
-        const {
-            children,
-            innerHeight,
-            innerWidth,
-            marginBottom,
-            marginLeft,
-            marginRight,
-            marginTop
-        } = newProps;
-        if (!ctx) {
-            return;
-        }
-
-        const childrenShouldAnimate = children.find(child => child.props.animation);
-
-        const height = innerHeight + marginTop + marginBottom;
-        const width = innerWidth + marginLeft + marginRight;
-        const layers = buildLayers(newProps.children, oldProps ? oldProps.children : []);
-        // if we don't need to be animating, dont! cut short
-        if (!childrenShouldAnimate) {
-            drawLayers(ctx, height, width, layers);
-            return;
-        }
-
-        engageDrawLoop(ctx, height, width, layers);
+        return;
+        // const {
+        //     children,
+        //     innerHeight,
+        //     innerWidth,
+        //     marginBottom,
+        //     marginLeft,
+        //     marginRight,
+        //     marginTop
+        // } = newProps;
+        // if (!ctx) {
+        //     return;
+        // }
+        //
+        // const childrenShouldAnimate = children.find(child => child.props.animation);
+        //
+        // const height = innerHeight + marginTop + marginBottom;
+        // const width = innerWidth + marginLeft + marginRight;
+        // const layers = buildLayers(newProps.children, oldProps ? oldProps.children : []);
+        // // if we don't need to be animating, dont! cut short
+        // if (!childrenShouldAnimate) {
+        //     drawLayers(ctx, height, width, layers);
+        //     return;
+        // }
+        //
+        // engageDrawLoop(ctx, height, width, layers);
     }
 };
 

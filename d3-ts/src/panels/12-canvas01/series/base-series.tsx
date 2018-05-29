@@ -1,27 +1,13 @@
-import * as React from 'react'
-
+import * as React from 'react';
+import {Datum} from '../utils/scales';
 // type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 export interface IProps {
-    xValue: any;
-    xDomain: [number, number];
-    xRange: [number, number];
-    xType: string;
-    xDistance: number;
-    xBaseValue: any;
-
-    yValue: any;
-    yDomain: [number, number];
-    yRange: [number, number];
-    yType: string;
-    yDistance: number;
-    yBaseValue: any;
-
     className?: string;
     style?: React.CSSProperties;
     width: number;
     height: number;
-    data: any[];
+    data: Datum;
     // onValueMouseOver?: MouseEventHandler;
     // onValueMouseOut?: EventHandler;
     // onValueClick?: EventHandler;
@@ -40,7 +26,6 @@ export interface IProps {
     curve?: string; // smooth
     marginLeft?: number;
     marginTop?: number;
-
 }
 
 export interface IDefaultProps {
