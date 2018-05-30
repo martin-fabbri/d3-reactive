@@ -13,7 +13,7 @@ interface IDefaultProps {
     style: React.CSSProperties;
 }
 
-// type PropsWithDefaults = IProps & IDefaultProps
+type PropsWithDefaults = IProps & IDefaultProps
 
 class XyFrame extends React.Component<IProps> {
 
@@ -22,10 +22,12 @@ class XyFrame extends React.Component<IProps> {
     };
 
     public render() {
-        const {height, width} = this.props;
+        const {height, width} = this.props as PropsWithDefaults;
         return (
             <div style={{width: `${width}px`, height: `${height}px`}}>
-                <svg className={'xy-frame-inner'}/>
+                <svg width={width} height={height} style={{padding: '3rem'}}>
+                    {this.props.children}
+                </svg>
             </div>
         );
     }
@@ -35,8 +37,9 @@ const StyledXyFrame = styled(XyFrame)`
   color: #c3c3c3;
   position: relative;
   
-  .xy-frame-inner {
+  svg {
     display: block;
+    padding: 3rem;
   }
 `;
 

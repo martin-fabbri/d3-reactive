@@ -10,17 +10,17 @@ interface IDefaultProps {
     position: TitlePosition;
 }
 
-const {Bottom} = Orientation;
+const {Left} = Orientation;
 const {Middle} = TitlePosition;
 
 type PropsWithDefaults = IProps & IDefaultProps;
 
-class XAxis extends React.Component<IProps> {
+class YAxis extends React.Component<IProps> {
 
     public static defaultProps: IDefaultProps = {
         attr: 'x',
         attrAxis: 'y',
-        orientation: Bottom,
+        orientation: Left,
         position: Middle
     };
 
@@ -31,4 +31,4 @@ class XAxis extends React.Component<IProps> {
     }
 }
 
-export default XAxis;
+export default YAxis;

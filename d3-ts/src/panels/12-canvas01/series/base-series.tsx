@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Datum} from '../utils/scales';
+import {IDatum} from '../utils/scales';
 // type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 export interface IProps {
@@ -7,7 +7,7 @@ export interface IProps {
     style?: React.CSSProperties;
     width: number;
     height: number;
-    data: Datum;
+    data: IDatum[];
     // onValueMouseOver?: MouseEventHandler;
     // onValueMouseOut?: EventHandler;
     // onValueClick?: EventHandler;

@@ -15,8 +15,10 @@ const {
 export const theme = {
     primaryColor: '#e9e9eb',
     // axis
+    // -> label
     xyPlotAxisFontColor: '#6b6b76',
     xyPlotAxisFontSize: '11px',
+    // -> ticks
     xyPlotAxisLineColor: '#e6e6e9',
 };
 

@@ -5,10 +5,10 @@ import {scaleLinear,} from 'd3-scale';
 export type Range = [number, number];
 export type Domain = [number, number];
 
-export type Datum = Array<{
-    x: number,
-    y: number
-}>;
+export interface IDatum {
+    x: number;
+    y: number;
+}
 
 export type DatumSlice = number[];
 

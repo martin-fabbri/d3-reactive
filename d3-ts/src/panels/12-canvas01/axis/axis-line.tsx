@@ -18,7 +18,7 @@ interface IDefaultProps {
 
 type PropsWithDefaults = IProps & IDefaultProps
 
-const {Left, Right, Top} = Orientation
+const {Bottom, Left, Right} = Orientation
 
 class AxisLine extends React.Component<IProps> {
 
@@ -30,7 +30,7 @@ class AxisLine extends React.Component<IProps> {
 
         const {height, style, orientation, width, className} = this.props as PropsWithDefaults;
 
-        // default orientation Bottom
+        // default orientation Top
         let lineProps = {
             x1: 0,
             x2: width,
@@ -39,16 +39,16 @@ class AxisLine extends React.Component<IProps> {
         };
 
         switch(orientation) {
-            case Left: {
+            case Bottom: {
                 lineProps = {
-                    x1: width,
+                    x1: 0,
                     x2: width,
-                    y1: 0,
+                    y1: height,
                     y2: height
                 };
                 break;
             }
-            case Right: {
+            case Left: {
                 lineProps = {
                     x1: 0,
                     x2: 0,
@@ -57,11 +57,11 @@ class AxisLine extends React.Component<IProps> {
                 };
                 break;
             }
-            case Top: {
+            case Right: {
                 lineProps = {
-                    x1: 0,
+                    x1: width,
                     x2: width,
-                    y1: height,
+                    y1: 0,
                     y2: height
                 };
                 break;

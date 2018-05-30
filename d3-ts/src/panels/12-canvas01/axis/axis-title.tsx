@@ -36,19 +36,19 @@ const transformation = (width: number, height: number) => ({
         [End]: {
             rotation: -90,
             textAnchor: 'end',
-            x: adjustmentForTextSize,
+            x: - adjustmentForTextSize,
             y: margin,
         },
         [Middle]: {
             rotation: -90,
             textAnchor: 'middle',
-            x: adjustmentForTextSize,
+            x: - adjustmentForTextSize,
             y: height / 2 - margin,
         },
         [Start]: {
             rotation: -90,
             textAnchor: 'start',
-            x: adjustmentForTextSize,
+            x: - adjustmentForTextSize,
             y: height - margin,
         }
     },
@@ -56,19 +56,19 @@ const transformation = (width: number, height: number) => ({
         [End]: {
             rotation: -90,
             textAnchor: 'end',
-            x: adjustmentForTextSize * -0.5,
+            x: width + adjustmentForTextSize * -0.5,
             y: margin,
         },
         [Middle]: {
             rotation: -90,
             textAnchor: 'middle',
-            x: adjustmentForTextSize * -0.5,
+            x: width + adjustmentForTextSize * -0.5,
             y: height / 2 - margin,
         },
         [Start]: {
             rotation: -90,
             textAnchor: 'start',
-            x: adjustmentForTextSize * -0.5,
+            x: width + adjustmentForTextSize * -0.5,
             y: height - margin,
         }
     },
@@ -97,19 +97,19 @@ const transformation = (width: number, height: number) => ({
             rotation: 0,
             textAnchor: 'start',
             x: margin,
-            y: -margin,
+            y: margin + adjustmentForTextSize,
         },
         [Middle]: {
             rotation: 0,
             textAnchor: 'middle',
             x: width / 2 - margin,
-            y: -margin,
+            y: margin + adjustmentForTextSize,
         },
         [End]: {
             rotation: 0,
             textAnchor: 'end',
             x: width - margin,
-            y: -margin,
+            y: margin + adjustmentForTextSize,
         }
     }
 });
@@ -123,11 +123,36 @@ class AxisTitle extends React.Component<IProps> {
 
     public render() {
         const {orientation, position, width, height, style, title, className} = this.props as PropsWithDefaults;
-        const outerGroupTranslateX = orientation === Left ? width : 0;
-        const outerGroupTranslateY = orientation === Top ? height : 0;
+
+        // const outerGroupTranslateX = orientation === Left ? width : 0;
+        // const outerGroupTranslateY = orientation === Top ? height : 0;
+
+        // orientation === top
+        let outerGroupTranslateX = 0;
+        let outerGroupTranslateY = 0;
+
+        switch (orientation) {
+            case Bottom: {
+                outerGroupTranslateY = height;
+                break;
+            }
+            case Left: {
+                break;
+            }
+            case Right: {
+                outerGroupTranslateX = width;
+                break;
+            }
+        }
+
         const outerGroupTransform = `translate(${outerGroupTranslateX}, ${outerGroupTranslateY})`;
         const {x, y, rotation, textAnchor} = transformation(width, height)[orientation][position];
         const innerGroupTransform = `translate(${x}, ${y}) rotate(${rotation})`;
+
+        // tslint:disable-next-line
+        console.log('Orientation Title', orientation);
+        // tslint:disable-next-line
+        console.log('Title x, y', x, y);
 
         return (
             <g transform={outerGroupTransform} className={className}>

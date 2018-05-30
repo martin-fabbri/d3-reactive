@@ -3,7 +3,7 @@ import * as React from 'react'
 import styled from '../theme';
 import BaseSeries, {PropsWithDefaults} from './base-series';
 
-import {getScaleFunc} from '../utils/scales';
+import {getScaleFunc, IDatum} from '../utils/scales';
 
 import {curveCardinal, line} from 'd3-shape';
 
@@ -42,16 +42,16 @@ class LineSeries extends BaseSeries {
 
         const x = getScaleFunc({
             data: data.map(elemm => elemm.x),
-            domain: [0, 100],
+            domain: [0, 255],
             kind: 'linear',
-            range: [0, 100]
+            range: [0, 200]
         });
 
         const y = getScaleFunc({
             data: data.map(elemm => elemm.y),
-            domain: [0, 100],
+            domain: [0, 600],
             kind: 'linear',
-            range: [0, 100]
+            range: [200, 0]
         });
 
         // const stroke =
@@ -60,11 +60,9 @@ class LineSeries extends BaseSeries {
         // const opacity = Number.isFinite(newOpacity) ? newOpacity : DEFAULT_OPACITY;
         // const getNull = this.props.nullAccessor || this.props.getNull;
 
-        const d = this.renderLine(data, x, y, curve);
-
         return (
             <path
-                d={d}
+                d={this.renderLine(data, x, y, curve)}
                 className={className}
                 transform={`translate(${marginLeft},${marginTop})`}
                 // onMouseOver={this.onSeriesMouseOverHandler}
@@ -82,12 +80,18 @@ class LineSeries extends BaseSeries {
         );
     }
 
-    private renderLine(data: any[], x: any, y: any, curve?: string): any {
-        const l =  line()
-            .x(x)
-            .y(y)
+    private renderLine(data: IDatum[], x: any, y: any, curve?: string): any {
+        const l =  line<IDatum>()
+            .x(d => x(d.x))
+            .y(d => y(d.y))
             .curve(curveCardinal);
 
+        // tslint:disable-next-line
+        // console.log('data', data);
+        // tslint:disable-next-line
+        console.log(data[0].x, x(data[0].x));
+        // tslint:disable-next-line
+        console.log(data[0].y, x(data[0].y));
         return l.call(this, data);
     }
 };

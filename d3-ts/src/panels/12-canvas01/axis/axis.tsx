@@ -16,22 +16,22 @@ export interface IProps {
     height: number;
     width: number;
 
-    top: number;
-    left: number;
+    top?: number;
+    left?: number;
 
     hideTicks?: boolean;
     hideLine?: boolean;
-    tickLabelAngle: number;
-    tickSize: number;
-    tickSizeInner: number;
-    tickSizeOuter: number;
-    tickPadding: number;
-    tickValues: any[];
+    tickLabelAngle?: number;
+    tickSize?: number;
+    tickSizeInner?: number;
+    tickSizeOuter?: number;
+    tickPadding?: number;
+    tickValues?: any[];
     // tickFormat: func;
-    tickTotal: number;
+    tickTotal?: number;
 
-    position: TitlePosition;
-    orientation: Orientation;
+    position?: TitlePosition;
+    orientation?: Orientation;
 
     marginTop?: number;
     marginBottom?: number;
@@ -45,9 +45,13 @@ export interface IProps {
 }
 
 export interface IDefaultProps {
+    className: string;
     style: React.CSSProperties;
     hideTicks: boolean;
     hideLine: boolean;
+
+    top: number;
+    left: number;
 
     marginTop: number;
     marginBottom: number;
@@ -55,6 +59,8 @@ export interface IDefaultProps {
     marginRight: number;
     innerWidth: number;
     innerHeight: number;
+
+    orientation: Orientation;
 }
 
 export type PropsWithDefaults = IProps & IDefaultProps
@@ -62,17 +68,20 @@ export type PropsWithDefaults = IProps & IDefaultProps
 const {Left, Top, Bottom} = Orientation;
 
 class Axis extends React.Component<IProps> {
-
     public static defaultProps: IDefaultProps = {
+        className: '',
         hideLine: false,
         hideTicks: false,
         innerHeight: 0,
         innerWidth: 0,
+        left:0,
         marginBottom: 0,
         marginLeft: 0,
         marginRight: 0,
         marginTop: 0,
+        orientation: Bottom,
         style: {},
+        top: 0
     };
 
     public render() {
@@ -82,9 +91,12 @@ class Axis extends React.Component<IProps> {
         const {title, position} = this.props as PropsWithDefaults;
         const props = {
             ...this.getDefaultAxisProps(),
-            ...this.props
+            ...this.props as PropsWithDefaults
         };
-        const {left, top} = props;
+        const {left, top} = this.props as PropsWithDefaults;
+
+        // tslint:disable-next-line
+        console.log('Orientation', orientation);
 
         return (
             <g
