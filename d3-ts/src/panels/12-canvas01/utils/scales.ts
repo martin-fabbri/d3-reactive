@@ -12,16 +12,18 @@ export interface IDatum {
 
 export type DatumSlice = number[];
 
+export type ScaleTypes = 'linear' | 'log';
+
 export interface ILinearScale {
     kind: 'linear';
-    readonly data: DatumSlice;
+    readonly data?: DatumSlice;
     range: Range;
     domain?: Domain;
 }
 
 export interface ILogScale {
     kind: 'log';
-    readonly data: DatumSlice;
+    readonly data?: DatumSlice;
     base: number;
     range: Range;
     domain?: Domain;
@@ -29,9 +31,10 @@ export interface ILogScale {
 
 export type Scale = ILinearScale | ILogScale;
 
-function linearFunc(range: Range, data: DatumSlice, domain?: Domain) {
+function linearFunc(range: Range, data?: DatumSlice, domain?: Domain) {
+    const [domainMin, domainMax] = data ? [min(data)!, max(data)!] : domain!;
     return scaleLinear()
-        .domain(domain ? domain : [min(data)!, max(data)!])
+        .domain([domainMin, domainMax])
         .range(range);
 }
 

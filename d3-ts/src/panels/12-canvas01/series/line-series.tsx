@@ -15,7 +15,7 @@ import {curveCardinal, line} from 'd3-shape';
 class LineSeries extends BaseSeries {
 
     public render() {
-        const {className, data} = this.props as PropsWithDefaults;
+        const {className, data, xDomain, xRange, yDomain, yRange} = this.props as PropsWithDefaults;
         // const {animation} = this.props;
 
         if (!data) {
@@ -41,17 +41,17 @@ class LineSeries extends BaseSeries {
         } = this.props as PropsWithDefaults;
 
         const x = getScaleFunc({
-            data: data.map(elemm => elemm.x),
-            domain: [0, 255],
+            data: data.map(elem => elem.x),
+            domain: xDomain,
             kind: 'linear',
-            range: [0, 200]
+            range: xRange
         });
 
         const y = getScaleFunc({
-            data: data.map(elemm => elemm.y),
-            domain: [0, 600],
+            data: data.map(elem => elem.y),
+            domain: yDomain,
             kind: 'linear',
-            range: [200, 0]
+            range: yRange
         });
 
         // const stroke =
@@ -85,13 +85,6 @@ class LineSeries extends BaseSeries {
             .x(d => x(d.x))
             .y(d => y(d.y))
             .curve(curveCardinal);
-
-        // tslint:disable-next-line
-        // console.log('data', data);
-        // tslint:disable-next-line
-        console.log(data[0].x, x(data[0].x));
-        // tslint:disable-next-line
-        console.log(data[0].y, x(data[0].y));
         return l.call(this, data);
     }
 };

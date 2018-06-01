@@ -146,13 +146,9 @@ class AxisTitle extends React.Component<IProps> {
         }
 
         const outerGroupTransform = `translate(${outerGroupTranslateX}, ${outerGroupTranslateY})`;
-        const {x, y, rotation, textAnchor} = transformation(width, height)[orientation][position];
+        const titleTransformations: {[o: string] : any} = transformation(width, height)
+        const {x, y, rotation, textAnchor} = titleTransformations[orientation][position];
         const innerGroupTransform = `translate(${x}, ${y}) rotate(${rotation})`;
-
-        // tslint:disable-next-line
-        console.log('Orientation Title', orientation);
-        // tslint:disable-next-line
-        console.log('Title x, y', x, y);
 
         return (
             <g transform={outerGroupTransform} className={className}>

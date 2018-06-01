@@ -7,9 +7,11 @@ import AxisTitle from './axis-title';
 import styled from '../theme';
 
 import {Orientation, ticksTotalFromSize, TitlePosition} from '../utils/axis';
+import {ScaleTypes} from '../utils/scales';
 
 export interface IProps {
     className?: string;
+    domain: [number, number];
     style?: React.CSSProperties;
     title?: string;
 
@@ -26,9 +28,9 @@ export interface IProps {
     tickSizeInner?: number;
     tickSizeOuter?: number;
     tickPadding?: number;
-    tickValues?: any[];
-    // tickFormat: func;
+    tickFormat?: (value: number) => string;
     tickTotal?: number;
+    tickValues: number[];
 
     position?: TitlePosition;
     orientation?: Orientation;
@@ -40,8 +42,8 @@ export interface IProps {
     innerWidth?: number;
     innerHeight?: number;
 
-    attr?: string;
-    attrAxis?: string;
+    range: [number, number];
+    scale?: ScaleTypes;
 }
 
 export interface IDefaultProps {
@@ -94,9 +96,6 @@ class Axis extends React.Component<IProps> {
             ...this.props as PropsWithDefaults
         };
         const {left, top} = this.props as PropsWithDefaults;
-
-        // tslint:disable-next-line
-        console.log('Orientation', orientation);
 
         return (
             <g

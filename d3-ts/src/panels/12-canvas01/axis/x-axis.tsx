@@ -1,11 +1,9 @@
 import * as React from 'react'
 
 import {Orientation, TitlePosition} from '../utils/axis';
-import Axis, {IProps} from './axis';
+import Axis, {IProps as IAxisProps} from './axis';
 
 interface IDefaultProps {
-    attr: string;
-    attrAxis: string;
     orientation: Orientation;
     position: TitlePosition;
 }
@@ -13,13 +11,11 @@ interface IDefaultProps {
 const {Bottom} = Orientation;
 const {Middle} = TitlePosition;
 
-type PropsWithDefaults = IProps & IDefaultProps;
+type PropsWithDefaults = IAxisProps & IDefaultProps;
 
-class XAxis extends React.Component<IProps> {
+class XAxis extends React.Component<IAxisProps> {
 
     public static defaultProps: IDefaultProps = {
-        attr: 'x',
-        attrAxis: 'y',
         orientation: Bottom,
         position: Middle
     };

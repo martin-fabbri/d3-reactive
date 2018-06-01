@@ -18,10 +18,6 @@ describe('xy-frame', () => {
         const container = wrapper.find('div');
         expect(container.length).toEqual(1);
         expect(container.prop('style')).toEqual({width: `${width}px`, height: `${height}px`});
-
-        // tslint:disable-next-line
-        console.log('okkkk', container.prop('style'));
-
         expect(wrapper.find("svg").length).toEqual(1);
     });
 

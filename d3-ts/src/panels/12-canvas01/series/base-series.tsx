@@ -4,6 +4,8 @@ import {IDatum} from '../utils/scales';
 
 export interface IProps {
     className?: string;
+    xDomain: [number, number];
+    yDomain: [number, number];
     style?: React.CSSProperties;
     width: number;
     height: number;
@@ -23,6 +25,8 @@ export interface IProps {
     strokeDasharray?: string;
     strokeStyle?: string;
     strokeWidth?: string;
+    xRange: [number, number];
+    yRange: [number, number];
     curve?: string; // smooth
     marginLeft?: number;
     marginTop?: number;

@@ -4,25 +4,30 @@ import styled, {theme} from '../theme';
 
 import {Orientation} from '../utils/axis';
 
-import {scaleLinear} from 'd3-scale'
+import {getScaleFunc, Scale, ScaleTypes} from "../utils/scales";
 
 interface IProps {
     className?: string;
+    domain: [number, number];
     height: number;
-    scale?: string;
+    scale?: ScaleTypes;
     style?: React.CSSProperties;
+    tickFormat?: (value: number) => string;
     tickLabelAngle?: number;
     tickSize?: number;
     tickSizeOuter?: number;
     tickOffset?: number;
     tickPadding?: number;
+    tickValues: number[];
     orientation: Orientation;
+    range: [number, number];
     width: number;
 }
 
 interface IDefaultProps {
-    scale: string;
+    scale: ScaleTypes;
     style: React.CSSProperties;
+    tickFormat: (value: number) => string;
     tickLabelAngle: number;
     tickSize: number;
     tickSizeOuter: number;
@@ -34,11 +39,14 @@ type PropsWithDefaults = IProps & IDefaultProps
 
 const {Left, Right, Bottom, Top} = Orientation
 
+const defaultTickFormat = (v: number) => v.toString();
+
 class AxisTicks extends React.Component<IProps> {
 
     public static defaultProps: IDefaultProps = {
         scale: 'linear',
         style: {},
+        tickFormat: defaultTickFormat,
         tickLabelAngle: 0,
         tickOffset: 7,
         tickPadding: 2,
@@ -47,7 +55,8 @@ class AxisTicks extends React.Component<IProps> {
     };
 
     public render() {
-        const {width, height, orientation, className, tickOffset} = this.props as PropsWithDefaults;
+        const {domain, width, height, orientation, className, range,
+            scale, tickFormat, tickOffset, tickValues} = this.props as PropsWithDefaults;
 
         // orientation === top
         let x = 0;
@@ -66,28 +75,50 @@ class AxisTicks extends React.Component<IProps> {
                 break;
             }
         }
-        
-        // tslint:disable-next-line
-        console.log('Ticks', orientation, x, y);
 
-        const values: number[] = [0, 5, 10, 15, 20];
-
+        const values = tickValues;
         const pathProps = this.getTickLineProps();
         const labelProps = this.getTickLabelProps();
         const translateFn = this.getTickContainerProps();
-        const linear = scaleLinear()
-            .range([0, width])
-            .domain([0, 20]);
 
-        const ticks = values.map((value: number, i: number) => {
-            const pos = linear(value);
+        let scaleProps: Scale;
+
+        switch (scale) {
+            case 'linear':
+                scaleProps = {
+                    domain,
+                    kind: 'linear',
+                    range
+                };
+                break;
+            case 'log':
+                scaleProps = {
+                    base: 10,
+                    domain,
+                    kind: 'log',
+                    range
+                };
+                break;
+            default:
+                scaleProps = {
+                    domain,
+                    kind: 'linear',
+                    range
+                };
+                break;
+        }
+
+        const scaleFunc = getScaleFunc(scaleProps);
+
+        const ticks = values.map((value, i: number) => {
+            const pos = scaleFunc(value);
 
             return (
                 <g key={i} {...translateFn(pos, tickOffset)}>
                     <line {...pathProps}
                           className={className}
                     />
-                    <text {...labelProps}>{value}</text>
+                    <text {...labelProps}>{tickFormat(value)}</text>
                 </g>
             );
         });
