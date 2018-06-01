@@ -1,21 +1,26 @@
 import * as React from 'react'
 
 import styled from '../theme';
-import BaseSeries, {IProps, PropsWithDefaults} from './base-series';
+import BaseSeries, {IDefaultProps as IBaseSeriesDefaultProps, IProps as IBaseSeriesProps} from './base-series';
 
 import {getScaleFunc, IDatum} from '../utils/scales';
 
-import {curveCardinal, line} from 'd3-shape';
+import {ScaleContinuousNumeric} from 'd3-scale';
+import {area, curveCardinal} from 'd3-shape';
 
-// const strokeStyles = {
-//     dashed: '6, 2',
-//     solid: null
-// };
 
-class LineSeries extends BaseSeries<IProps> {
+export interface IProps extends IBaseSeriesProps {
+    y0: [number, number];
+}
+
+export type PropsWithDefaults = IProps & IBaseSeriesDefaultProps;
+
+
+class AreaSeries extends BaseSeries<IProps> {
 
     public render() {
-        const {className, data, xDomain, xRange, yDomain, yRange} = this.props as PropsWithDefaults;
+        const {className, curve, data, marginLeft, marginTop,
+            xDomain, xRange, yDomain, yRange, y0} = this.props as PropsWithDefaults;
         // const {animation} = this.props;
 
         if (!data) {
@@ -30,15 +35,6 @@ class LineSeries extends BaseSeries<IProps> {
         //     );
         // }
 
-        const {
-            curve,
-            marginLeft,
-            marginTop,
-            // strokeDasharray,
-            // strokeStyle,
-            // strokeWidth,
-            // style
-        } = this.props as PropsWithDefaults;
 
         const x = getScaleFunc({
             data: xDomain ? undefined : data.map(elem => elem.x),
@@ -62,7 +58,7 @@ class LineSeries extends BaseSeries<IProps> {
 
         return (
             <path
-                d={this.renderLine(data, x, y, curve)}
+                d={this.renderArea(data, x, y, y0, curve)}
                 className={className}
                 transform={`translate(${marginLeft},${marginTop})`}
                 // onMouseOver={this.onSeriesMouseOverHandler}
@@ -80,22 +76,30 @@ class LineSeries extends BaseSeries<IProps> {
         );
     }
 
-    private renderLine(data: IDatum[], x: any, y: any, curve?: string): any {
-        const l =  line<IDatum>()
+
+    private renderArea(data: IDatum[],
+                       x: ScaleContinuousNumeric<number, number>,
+                       y: ScaleContinuousNumeric<number, number>,
+                       y0: [number, number],
+                       curve?: string) {
+
+        const l =  area<IDatum>()
             .x(d => x(d.x))
-            .y(d => y(d.y))
+            .y0(y0[0])
+            .y1(d => y(d.y))
             .curve(curveCardinal);
         return l.call(this, data);
     }
 };
 
-const StyledLineSeries = styled(LineSeries)`
-    fill: none;
+const StyledAreaSeries = styled(AreaSeries)`
+    fill: teal;
     stroke: black;
     stroke-width: 2px;    
+    opacity: 0.75;
     path {
       pointer-events: all;
     }
 `;
 
-export default StyledLineSeries;
+export default StyledAreaSeries;

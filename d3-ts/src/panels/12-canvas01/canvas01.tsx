@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 // import {default as XAxis, XAxis} from './axis/x-axis';
+import AreaSeries from './series/area-series';
 import LineSeries from './series/line-series';
 import {IDatum} from "./utils/scales";
 
@@ -57,14 +58,30 @@ class Canvas01Panel extends React.Component<IProps> {
         return (
             <div className="mt-4 mb-4">
                 <h3>Canvas01</h3>
-                <XyFrame height={400} width={400}>
+                <XyFrame height={400} width={400} style={{fill: '#0'}}>
                     <XAxis height={256} width={256} title={xLabel} tickValues={[50000, 100000, 150000, 200000, 250000]}
                         scale={'linear'} domain={[0, 280000]} range={[0, 255]} tickFormat={xTickFormat}/>
                     <YAxis height={256} width={256} title={yLabel} tickValues={[1000, 2000, 3000, 4000, 5000, 6000]}
                         scale={'linear'} domain={[0, 6000]} range={[255, 0]} tickFormat={yTickFormat}/>
-                    <LineSeries width={280} height={280} data={dataset}
-                                xDomain={[0, 28]} xRange={[0, 255]}
-                                yDomain={[0, 6]} yRange={[255, 0]}
+                    <AreaSeries width={256} height={256} data={dataset}
+                                xDomain={[0, 255]} xRange={[0, 255]}
+                                yDomain={[0, 700]} yRange={[255, 0]}
+                                y0={[255, 0]}
+                                />
+                    <LineSeries width={256} height={256} data={dataset}
+                                xDomain={[0, 255]} xRange={[0, 255]}
+                                yDomain={[0, 700]} yRange={[255, 0]}
+                    />
+                </XyFrame>
+
+                <XyFrame height={400} width={400} style={{fill: '#0'}}>
+                    <XAxis height={256} width={256} title={xLabel} tickValues={[50000, 100000, 150000, 200000, 250000]}
+                           scale={'linear'} domain={[0, 280000]} range={[0, 255]} tickFormat={xTickFormat}/>
+                    <YAxis height={256} width={256} title={yLabel} tickValues={[1000, 2000, 3000, 4000, 5000, 6000]}
+                           scale={'linear'} domain={[0, 6000]} range={[255, 0]} tickFormat={yTickFormat}/>
+                    <LineSeries width={256} height={256} data={dataset}
+                                xDomain={[0, 255]} xRange={[0, 255]}
+                                yDomain={[0, 700]} yRange={[255, 0]}
                     />
                 </XyFrame>
             </div>

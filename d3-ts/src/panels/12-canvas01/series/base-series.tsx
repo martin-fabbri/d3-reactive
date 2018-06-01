@@ -30,6 +30,7 @@ export interface IProps {
     curve?: string; // smooth
     marginLeft?: number;
     marginTop?: number;
+    y0?: [number, number];
 }
 
 export interface IDefaultProps {
@@ -43,7 +44,7 @@ export interface IDefaultProps {
 
 export type PropsWithDefaults = IProps & IDefaultProps
 
-class BaseSeries extends React.Component<IProps> {
+class BaseSeries<P extends IProps> extends React.Component<P> {
 
     static get requireSVG() {
         return true;
