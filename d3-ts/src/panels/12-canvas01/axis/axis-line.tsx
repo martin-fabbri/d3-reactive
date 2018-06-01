@@ -5,20 +5,20 @@ import styled, {theme} from '../theme';
 import {Orientation} from '../utils/axis'
 
 interface IProps {
-    className?: string
-    height: number
-    style?: React.CSSProperties
-    orientation: Orientation
-    width: number
+    className?: string;
+    height: number;
+    style?: React.CSSProperties;
+    orientation: Orientation;
+    width: number;
 }
 
 interface IDefaultProps {
-    style: React.CSSProperties
+    style: React.CSSProperties;
 }
 
-type PropsWithDefaults = IProps & IDefaultProps
+type PropsWithDefaults = IProps & IDefaultProps;
 
-const {Bottom, Left, Right} = Orientation
+const {Bottom, Left, Right} = Orientation;
 
 class AxisLine extends React.Component<IProps> {
 

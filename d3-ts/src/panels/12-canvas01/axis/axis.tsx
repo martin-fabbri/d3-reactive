@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import AxisLine from './axis-line';
 import AxisTicks from './axis-ticks';
@@ -135,38 +135,41 @@ class Axis extends React.Component<IProps> {
             orientation
         } = this.props as PropsWithDefaults;
 
-        if (orientation === Bottom) {
-            return {
-                height: marginBottom,
-                left: marginLeft,
-                tickTotal: ticksTotalFromSize(innerWidth),
-                top: innerHeight + marginTop,
-                width: innerWidth,
-            };
-        } else if (orientation === Top) {
-            return {
-                height: marginTop,
-                left: marginLeft,
-                tickTotal: ticksTotalFromSize(innerWidth),
-                top: 0,
-                width: innerWidth,
-            };
-        } else if (orientation === Left) {
-            return {
-                height: innerHeight,
-                left: 0,
-                tickTotal: ticksTotalFromSize(innerHeight),
-                top: marginTop,
-                width: marginLeft,
-            };
+        switch (orientation) {
+            case Bottom:
+                return {
+                    height: marginBottom,
+                    left: marginLeft,
+                    tickTotal: ticksTotalFromSize(innerWidth),
+                    top: innerHeight + marginTop,
+                    width: innerWidth,
+                };
+            case Top:
+                return {
+                    height: marginTop,
+                    left: marginLeft,
+                    tickTotal: ticksTotalFromSize(innerWidth),
+                    top: 0,
+                    width: innerWidth,
+                };
+            case Left:
+                return {
+                    height: innerHeight,
+                    left: 0,
+                    tickTotal: ticksTotalFromSize(innerHeight),
+                    top: marginTop,
+                    width: marginLeft,
+                };
+            default:
+                return {
+                    height: innerHeight,
+                    left: marginLeft + innerWidth,
+                    tickTotal: ticksTotalFromSize(innerHeight),
+                    top: marginTop,
+                    width: marginRight,
+                };
         }
-        return {
-            height: innerHeight,
-            left: marginLeft + innerWidth,
-            tickTotal: ticksTotalFromSize(innerHeight),
-            top: marginTop,
-            width: marginRight,
-        };
+
     }
 }
 
