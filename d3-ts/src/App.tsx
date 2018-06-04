@@ -14,6 +14,7 @@ import ScatterPanel from "./panels/09-scatter-plot/scatter";
 import Transitions101Panel from "./panels/10-transitions-101/transitions101";
 import InterpolationPanel from "./panels/11-interpolation/canvas01";
 import Canvas01Panel from "./panels/12-canvas01/canvas01";
+import CanvasPicking from "./panels/13-picking/canvas-picking";
 
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './index.css';
@@ -48,6 +49,7 @@ class App extends React.Component<IProps, IState> {
                     renderActiveTabPanelOnly={this.state.activePanelOnly}
                     vertical={this.state.vertical}
                 >
+                    <Tab id="cp" title="13-Picking" panel={<CanvasPicking/>} />
                     <Tab id="c1" title="12-Canvas01" panel={<Canvas01Panel/>} />
                     <Tab id="it" title="11-Interpolation" panel={<InterpolationPanel/>} />
                     <Tab id="tr" title="10-Transitions101" panel={<Transitions101Panel/>} />
