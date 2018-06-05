@@ -3,8 +3,8 @@ import * as React from 'react'
 import {extent, interpolateSpectral, scaleSequential} from 'd3';
 
 import {IElementValue} from '../canvas-picking';
+import {Optional} from '../global-types';
 import styled from '../theme';
-
 
 export interface IProps {
     data: IElementValue[];
@@ -46,7 +46,7 @@ const rect = (props: IRectProps) => {
 
 class CanvasFrame extends React.Component<IProps> {
     public static defaultProps: IDefaultProps = {
-        children: null,
+        children: undefined,
         marginBottom: 0,
         marginLeft: 0,
         marginRight: 0,
@@ -63,9 +63,10 @@ class CanvasFrame extends React.Component<IProps> {
             return;
         }
 
+        this.setState({ctx});
         const {pixelRatio} = this.props as PropsWithDefaults;
         ctx.scale(pixelRatio, pixelRatio);
-        this.drawChildren(this.props as PropsWithDefaults, null, ctx);
+        this.drawChildren(this.props as PropsWithDefaults, undefined, ctx);
     }
 
     public componentDidUpdate() {
@@ -101,9 +102,9 @@ class CanvasFrame extends React.Component<IProps> {
         );
     }
 
-    private drawChildren(newProps: PropsWithDefaults, oldProps: PropsWithDefaults | null,
+    private drawChildren(newProps: PropsWithDefaults,
+                         oldProps: Optional<PropsWithDefaults>,
                          ctx: CanvasRenderingContext2D) {
-
         const {data, innerHeight, innerWidth} = newProps;
 
         const groupSpacing = 4;
@@ -120,9 +121,10 @@ class CanvasFrame extends React.Component<IProps> {
         const colourScale = scaleSequential(interpolateSpectral)
             .domain(dom);
 
+        // clear the canvas
         ctx.clearRect(0,0, innerWidth, innerHeight);
-        // draw children “components”
 
+        // draw children “components”
         data.map((d, i) => {
             const x0 = Math.floor(i / 100) % 10;
             const x1 = Math.floor(i % 10);

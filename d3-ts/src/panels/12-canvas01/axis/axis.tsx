@@ -119,7 +119,7 @@ class Axis extends React.Component<IProps> {
                         width={width}
                         style={style}
                         orientation={orientation}/> :
-                    null}
+                    undefined}
             </g>
         );
     }

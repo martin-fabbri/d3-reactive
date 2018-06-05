@@ -24,7 +24,7 @@ class AreaSeries extends BaseSeries<IProps> {
         // const {animation} = this.props;
 
         if (!data) {
-            return null;
+            return undefined;
         }
 
         // if (animation) {

@@ -1,9 +1,13 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "no-null-keyword": true
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts",
+      "node_modules/**/*.js",
       "tailwind.config.js"
     ]
   }

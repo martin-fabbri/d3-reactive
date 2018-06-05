@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import styled from '../theme';
 
+import {Optional} from '../global-types';
+
 export interface IProps {
     style?: React.CSSProperties;
     innerHeight: number;
@@ -22,7 +24,7 @@ type PropsWithDefaults = IProps & IDefaultProps
 
 class CanvasFrame extends React.Component<IProps> {
     public static defaultProps: IDefaultProps = {
-        children: null,
+        children: undefined,
         pixelRatio: window && window.devicePixelRatio || 1,
         style: {},
     };
@@ -37,7 +39,7 @@ class CanvasFrame extends React.Component<IProps> {
         }
 
         ctx.scale(pixelRatio, pixelRatio);
-        this.drawChildren(this.props as PropsWithDefaults, null, ctx);
+        this.drawChildren(this.props as PropsWithDefaults, undefined, ctx);
     }
 
     public componentDidUpdate() {
@@ -81,7 +83,7 @@ class CanvasFrame extends React.Component<IProps> {
      * @param ctx the canvas context to be drawn on.
      * @returns Object for rendering
      */
-    private drawChildren(newProps: PropsWithDefaults, oldProps: PropsWithDefaults | null,
+    private drawChildren(newProps: PropsWithDefaults, oldProps: Optional<PropsWithDefaults>,
                          ctx: CanvasRenderingContext2D) {
         return;
         // const {

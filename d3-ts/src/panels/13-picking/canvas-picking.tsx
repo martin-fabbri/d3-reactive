@@ -19,14 +19,14 @@ class CanvasPickingPanel extends React.Component {
         const width = 750;
         const height = 400;
 
+
+
         return (
-            <>
-                <CanvasFrame
-                    data={data}
-                    innerWidth={width}
-                    innerHeight={height}
-                />
-            </>
+            <CanvasFrame
+                data={data}
+                innerWidth={width}
+                innerHeight={height}
+            />
         )
     }
 };
