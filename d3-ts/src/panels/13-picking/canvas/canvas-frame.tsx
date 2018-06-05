@@ -1,13 +1,12 @@
 import * as React from 'react'
 
-import {extent, interpolateSpectral, scaleSequential} from 'd3';
-
-import {IElementValue} from '../canvas-picking';
+import {scaleLinear} from 'd3';
+import {IDatum} from '../canvas-picking';
 import {Optional} from '../global-types';
 import styled from '../theme';
 
 export interface IProps {
-    data: IElementValue[];
+    data: IDatum[];
     innerHeight: number;
     innerWidth: number;
     marginBottom?: number;
@@ -15,6 +14,7 @@ export interface IProps {
     marginRight?: number;
     marginTop?: number;
     style?: React.CSSProperties;
+
 }
 
 interface IDefaultProps {
@@ -29,20 +29,48 @@ interface IDefaultProps {
 
 type PropsWithDefaults = IProps & IDefaultProps;
 
-interface  IRectProps {
-    ctx: CanvasRenderingContext2D,
-    fillStyle: string | CanvasGradient | CanvasPattern;
-    x: number,
-    y: number,
-    width: number,
-    height: number
-};
 
-const rect = (props: IRectProps) => {
-    const {ctx, x, y, width, height, fillStyle} = props;
-    ctx.fillStyle = fillStyle;
-    ctx.fillRect(x, y, width, height);
-};
+const mapColorToNode = {};
+
+/**
+ * Todo ...
+ * @param hidden Render a hidden canvas layer
+ */
+function drawChildren (newProps: PropsWithDefaults,
+    oldProps: Optional<PropsWithDefaults>,
+    ctx: CanvasRenderingContext2D,
+    hidden = false) {
+    const {data, innerHeight, innerWidth} = newProps;
+
+    const x = scaleLinear()
+        .domain([2, 8])
+        .range([0, innerWidth]);
+
+    const y = scaleLinear()
+        .domain([2, 8])
+        .range([innerHeight, 0]);
+
+    // clear the canvas
+    ctx.clearRect(0,0, innerWidth, innerHeight);
+
+    // draw children “components”
+    data.map((d, i) => {
+        ctx.beginPath();
+        ctx.arc(x(d.x), y(d.y), Math.abs(d.r), 0, 2 * Math.PI);
+        ctx.fillStyle = hidden ? `${getColor(d).next()}` : `steelblue`;
+        ctx.fill();
+        ctx.strokeStyle = `teal`;
+        ctx.stroke();
+    });
+}
+
+function* getColor(d: IDatum) {
+    let i = 0;
+    while(true) {
+        mapColorToNode[i + 1] = d;
+        yield i++;
+    }
+}
 
 class CanvasFrame extends React.Component<IProps> {
     public static defaultProps: IDefaultProps = {
@@ -55,18 +83,21 @@ class CanvasFrame extends React.Component<IProps> {
         style: {},
     };
 
-    private readonly canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+    private readonly mainCanvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+    private readonly hiddenCanvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
     public componentDidMount() {
-        const ctx = this.canvasRef.current!.getContext('2d');
-        if (!ctx) {
+        const mainCtx = this.mainCanvasRef.current!.getContext('2d');
+        const hiddenCanvasCtx = this.hiddenCanvasRef.current!.getContext('2d');
+        if (!mainCtx || !hiddenCanvasCtx) {
             return;
         }
 
-        this.setState({ctx});
+        this.setState({ctx: mainCtx});
         const {pixelRatio} = this.props as PropsWithDefaults;
-        ctx.scale(pixelRatio, pixelRatio);
-        this.drawChildren(this.props as PropsWithDefaults, undefined, ctx);
+        mainCtx.scale(pixelRatio, pixelRatio);
+        drawChildren(this.props as PropsWithDefaults, undefined, mainCtx);
+        drawChildren(this.props as PropsWithDefaults, undefined, hiddenCanvasCtx, true);
     }
 
     public componentDidUpdate() {
@@ -90,56 +121,37 @@ class CanvasFrame extends React.Component<IProps> {
         return (
             <div style={{left: 0, top: 0}}>
                 <canvas
-                    className="rv-xy-canvas-element"
                     height={height * pixelRatio}
                     width={width * pixelRatio}
                     style={{
                         height: `${height}px`,
                         width: `${width}px`
                     }}
-                    ref={this.canvasRef}/>
+                    ref={this.mainCanvasRef}
+                    onMouseMove={this.log}
+                />
+
+                <canvas
+                    height={height * pixelRatio}
+                    width={width * pixelRatio}
+                    style={{
+                        display: 'none',
+                        height: `${height}px`,
+                        width: `${width}px`,
+                    }}
+                    ref={this.hiddenCanvasRef}/>
             </div>
         );
     }
 
-    private drawChildren(newProps: PropsWithDefaults,
-                         oldProps: Optional<PropsWithDefaults>,
-                         ctx: CanvasRenderingContext2D) {
-        const {data, innerHeight, innerWidth} = newProps;
+    private log(ev: React.MouseEvent<HTMLCanvasElement>) {
+        // tslint:disable-next-line
+        console.log('x ... ', ev.clientX);
 
-        const groupSpacing = 4;
-        const cellSpacing = 2;
-        // const offsetTop = innerHeight / 5;
-        const cellSize = Math.floor((innerWidth - 11 * groupSpacing) / 100) - cellSpacing;
-
-        const extDomain = extent<IElementValue, number>(data,
-            d => (d && d.value && typeof d.value === 'number' ? d.value : 0));
-
-        const dom: [number, number] = typeof extDomain[0] === undefined || typeof extDomain[1] === undefined ?
-            [100, 100] : [extDomain[0]!, extDomain[1]!];
-
-        const colourScale = scaleSequential(interpolateSpectral)
-            .domain(dom);
-
-        // clear the canvas
-        ctx.clearRect(0,0, innerWidth, innerHeight);
-
-        // draw children “components”
-        data.map((d, i) => {
-            const x0 = Math.floor(i / 100) % 10;
-            const x1 = Math.floor(i % 10);
-            const x = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10);
-
-            const y0 = Math.floor(i / 1000);
-            const y1 = Math.floor(i % 100 / 10);
-            const y = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10);
-
-            const height = 4.5;
-            const width = 4.5;
-
-            rect({ctx, x, y, height, width, fillStyle: colourScale(d.value)});
-        });
+        // tslint:disable-next-line
+        console.log('sx ... ', ev.clientY);
     }
+
 };
 
 const StyledCanvasFrame = styled(CanvasFrame)`

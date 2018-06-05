@@ -1,25 +1,29 @@
 import * as React from 'react';
 
-import {range} from 'd3';
+import {randomNormal, range} from 'd3';
 
 import CanvasFrame from './canvas/canvas-frame';
 
-export interface IElementValue {
-    value: number
+export interface IDatum {
+    x: number;
+    y: number;
+    r: number;
 }
 
 class CanvasPickingPanel extends React.Component {
 
     public render() {
-        const data: IElementValue[] = [];
-        range(5000).forEach(el => data.push({value: el}));
+        const data: IDatum[] = [];
+        range(20000).forEach(el => data.push({
+            r: randomNormal(3, 1)(),
+            x: randomNormal(5, 3)(),
+            y: randomNormal(5, 3)()
+        }));
 
         // tslint:disable-next-line
         console.log('this.data', data);
-        const width = 750;
-        const height = 400;
-
-
+        const width = 1400;
+        const height = 750;
 
         return (
             <CanvasFrame
